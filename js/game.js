@@ -117,8 +117,10 @@ class Game {
         document.getElementById('sell-btn').addEventListener('click', () => this.sellTower());
 
         // Кнопки способностей
-        document.getElementById('ability-fire').addEventListener('click', () => this.activateAbility('rainOfFire'));
-        document.getElementById('ability-reinforce').addEventListener('click', () => this.activateAbility('reinforcements'));
+        const abilityFire = document.getElementById('ability-fire');
+        const abilityReinforce = document.getElementById('ability-reinforce');
+        if (abilityFire) abilityFire.addEventListener('click', () => this.activateAbility('rainOfFire'));
+        if (abilityReinforce) abilityReinforce.addEventListener('click', () => this.activateAbility('reinforcements'));
     }
 
     start(difficulty) {
@@ -767,7 +769,9 @@ class Game {
     // ===== СПОСОБНОСТИ =====
 
     activateAbility(type) {
-        if (!this.abilities[type].ready) return;
+        // Проверка что игра запущена и способность готова
+        if (this.state !== 'playing') return;
+        if (!this.abilities[type] || !this.abilities[type].ready) return;
 
         this.activeAbility = type;
         this.selectedTowerType = null;
