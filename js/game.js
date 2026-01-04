@@ -119,8 +119,18 @@ class Game {
         // Кнопки способностей
         const abilityFire = document.getElementById('ability-fire');
         const abilityReinforce = document.getElementById('ability-reinforce');
-        if (abilityFire) abilityFire.addEventListener('click', () => this.activateAbility('rainOfFire'));
-        if (abilityReinforce) abilityReinforce.addEventListener('click', () => this.activateAbility('reinforcements'));
+        if (abilityFire) {
+            abilityFire.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.activateAbility('rainOfFire');
+            });
+        }
+        if (abilityReinforce) {
+            abilityReinforce.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.activateAbility('reinforcements');
+            });
+        }
     }
 
     start(difficulty) {
@@ -169,13 +179,18 @@ class Game {
     gameLoop() {
         if (this.state === 'gameover' || this.state === 'menu') return;
 
-        if (this.state === 'playing') {
-            for (let i = 0; i < this.gameSpeed; i++) {
-                this.update();
+        try {
+            if (this.state === 'playing') {
+                for (let i = 0; i < this.gameSpeed; i++) {
+                    this.update();
+                }
             }
+
+            this.render();
+        } catch (error) {
+            console.error('Game loop error:', error);
         }
 
-        this.render();
         requestAnimationFrame(() => this.gameLoop());
     }
 
@@ -878,13 +893,15 @@ class Game {
         const fireCd = document.getElementById('fire-cooldown');
         const ab1 = this.abilities.rainOfFire;
 
-        if (ab1.ready) {
-            fireBtn.classList.remove('on-cooldown');
-            fireCd.style.display = 'none';
-        } else {
-            fireBtn.classList.add('on-cooldown');
-            fireCd.style.display = 'block';
-            fireCd.textContent = Math.ceil(ab1.cooldown / 1000) + 's';
+        if (fireBtn && fireCd && ab1) {
+            if (ab1.ready) {
+                fireBtn.classList.remove('on-cooldown');
+                fireCd.style.display = 'none';
+            } else {
+                fireBtn.classList.add('on-cooldown');
+                fireCd.style.display = 'block';
+                fireCd.textContent = Math.ceil(ab1.cooldown / 1000) + 's';
+            }
         }
 
         // Подкрепление
@@ -892,13 +909,15 @@ class Game {
         const reCd = document.getElementById('reinforce-cooldown');
         const ab2 = this.abilities.reinforcements;
 
-        if (ab2.ready) {
-            reBtn.classList.remove('on-cooldown');
-            reCd.style.display = 'none';
-        } else {
-            reBtn.classList.add('on-cooldown');
-            reCd.style.display = 'block';
-            reCd.textContent = Math.ceil(ab2.cooldown / 1000) + 's';
+        if (reBtn && reCd && ab2) {
+            if (ab2.ready) {
+                reBtn.classList.remove('on-cooldown');
+                reCd.style.display = 'none';
+            } else {
+                reBtn.classList.add('on-cooldown');
+                reCd.style.display = 'block';
+                reCd.textContent = Math.ceil(ab2.cooldown / 1000) + 's';
+            }
         }
     }
 
