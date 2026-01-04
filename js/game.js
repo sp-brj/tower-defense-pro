@@ -460,6 +460,12 @@ class Game {
     onLeftClick(e) {
         if (this.state !== 'playing') return;
 
+        // Проверка что клик внутри canvas
+        if (this.mouseX < 0 || this.mouseX > this.canvas.width ||
+            this.mouseY < 0 || this.mouseY > this.canvas.height) {
+            return;
+        }
+
         this.closeUpgradeMenu();
 
         // Если активна способность
@@ -785,6 +791,11 @@ class Game {
         const type = this.activeAbility;
         if (!type || !this.abilities[type].ready) return;
 
+        // Проверка что координаты внутри canvas
+        if (x < 0 || x > this.canvas.width || y < 0 || y > this.canvas.height) {
+            return; // Не тратим способность если клик вне игрового поля
+        }
+
         if (type === 'rainOfFire') {
             this.useRainOfFire(x, y);
         } else if (type === 'reinforcements') {
@@ -802,18 +813,26 @@ class Game {
     useRainOfFire(x, y) {
         const cfg = CONFIG.ABILITIES.rainOfFire;
 
+        // Проверка что координаты в пределах canvas
+        if (x < 0 || x > this.canvas.width || y < 0 || y > this.canvas.height) {
+            return;
+        }
+
         // Создаём несколько метеоров
+        const self = this;
         for (let i = 0; i < 5; i++) {
             const offsetX = (Math.random() - 0.5) * cfg.radius;
             const offsetY = (Math.random() - 0.5) * cfg.radius;
 
-            setTimeout(() => {
-                this.meteors.push(new Meteor(
-                    x + offsetX,
-                    y + offsetY,
-                    cfg.damage,
-                    cfg.radius * 0.5
-                ));
+            setTimeout(function() {
+                if (self.state === 'playing') {
+                    self.meteors.push(new Meteor(
+                        x + offsetX,
+                        y + offsetY,
+                        cfg.damage,
+                        cfg.radius * 0.5
+                    ));
+                }
             }, i * 200);
         }
     }
