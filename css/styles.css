@@ -402,6 +402,88 @@ body {
     font-size: 22px;
 }
 
+/* Выбор героя */
+#hero-screen .heroes-grid {
+    display: flex;
+    gap: 20px;
+    margin: 30px 0 20px;
+}
+
+.hero-card {
+    background: linear-gradient(180deg, #2a2a4e 0%, #1a1a2e 100%);
+    border: 3px solid #3a3a5e;
+    border-radius: 12px;
+    padding: 15px;
+    width: 180px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.hero-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(116, 192, 252, 0.3);
+    border-color: #74c0fc;
+}
+
+.hero-card.selected {
+    border-color: #51cf66;
+    box-shadow: 0 0 20px rgba(81, 207, 102, 0.4);
+}
+
+.hero-card .hero-icon {
+    font-size: 48px;
+    margin-bottom: 8px;
+}
+
+.hero-card h3 {
+    color: #74c0fc;
+    margin-bottom: 6px;
+    font-size: 16px;
+}
+
+.hero-card .hero-desc {
+    font-size: 11px;
+    color: #6c757d;
+    margin-bottom: 12px;
+    min-height: 30px;
+}
+
+.hero-card .hero-stats {
+    font-size: 10px;
+}
+
+.hero-card .stat-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.hero-card .stat-row span {
+    width: 55px;
+    text-align: left;
+    color: #adb5bd;
+}
+
+.hero-card .stat-bar {
+    flex: 1;
+    height: 6px;
+    background: #1a1a2e;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.hero-card .stat-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #51cf66, #69db7c);
+    border-radius: 3px;
+}
+
+.hero-card[data-hero="knight"] .stat-fill { background: linear-gradient(90deg, #4dabf7, #74c0fc); }
+.hero-card[data-hero="archer"] .stat-fill { background: linear-gradient(90deg, #51cf66, #69db7c); }
+.hero-card[data-hero="mage"] .stat-fill { background: linear-gradient(90deg, #be4bdb, #da77f2); }
+
 /* Выбор сложности */
 #difficulty-screen .difficulties {
     display: flex;

@@ -152,6 +152,10 @@ class AudioSystem {
                 osc.stop(now + 0.4);
                 break;
 
+            case 'levelUp':
+                this.playLevelUpSound();
+                return;
+
             default:
                 osc.frequency.setValueAtTime(440, now);
                 gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
@@ -172,6 +176,23 @@ class AudioSystem {
             g.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.1 * i + 0.3);
             o.start(this.ctx.currentTime + 0.1 * i);
             o.stop(this.ctx.currentTime + 0.1 * i + 0.3);
+        });
+    }
+
+    playLevelUpSound() {
+        // Восходящая мелодия при повышении уровня
+        const notes = [392, 523, 659, 784]; // G4, C5, E5, G5
+        notes.forEach((freq, i) => {
+            const o = this.ctx.createOscillator();
+            const g = this.ctx.createGain();
+            o.connect(g);
+            g.connect(this.ctx.destination);
+            o.type = 'triangle';
+            o.frequency.value = freq;
+            g.gain.value = this.sfxVolume * 0.25;
+            g.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.08 * i + 0.2);
+            o.start(this.ctx.currentTime + 0.08 * i);
+            o.stop(this.ctx.currentTime + 0.08 * i + 0.2);
         });
     }
 }

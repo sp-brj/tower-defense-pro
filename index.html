@@ -20,6 +20,48 @@
             <p class="version-info">v3.0 | Клавиши: 1-6 башни, Q/W способности, Space волна, Esc пауза</p>
         </div>
 
+        <!-- ===== ВЫБОР ГЕРОЯ ===== -->
+        <div id="hero-screen" class="screen">
+            <h2>Выбери героя</h2>
+            <div class="heroes-grid">
+                <div class="hero-card selected" data-hero="knight">
+                    <div class="hero-icon">🛡️</div>
+                    <h3>Рыцарь</h3>
+                    <p class="hero-desc">Крепкий воин. Много здоровья, сильные атаки.</p>
+                    <div class="hero-stats">
+                        <div class="stat-row"><span>HP</span><div class="stat-bar"><div class="stat-fill" style="width: 100%"></div></div></div>
+                        <div class="stat-row"><span>Атака</span><div class="stat-bar"><div class="stat-fill" style="width: 80%"></div></div></div>
+                        <div class="stat-row"><span>Скорость</span><div class="stat-bar"><div class="stat-fill" style="width: 40%"></div></div></div>
+                        <div class="stat-row"><span>Дальность</span><div class="stat-bar"><div class="stat-fill" style="width: 40%"></div></div></div>
+                    </div>
+                </div>
+                <div class="hero-card" data-hero="archer">
+                    <div class="hero-icon">🏹</div>
+                    <h3>Лучница</h3>
+                    <p class="hero-desc">Быстрая и ловкая. Бьёт издалека.</p>
+                    <div class="hero-stats">
+                        <div class="stat-row"><span>HP</span><div class="stat-bar"><div class="stat-fill" style="width: 40%"></div></div></div>
+                        <div class="stat-row"><span>Атака</span><div class="stat-bar"><div class="stat-fill" style="width: 60%"></div></div></div>
+                        <div class="stat-row"><span>Скорость</span><div class="stat-bar"><div class="stat-fill" style="width: 80%"></div></div></div>
+                        <div class="stat-row"><span>Дальность</span><div class="stat-bar"><div class="stat-fill" style="width: 100%"></div></div></div>
+                    </div>
+                </div>
+                <div class="hero-card" data-hero="mage">
+                    <div class="hero-icon">🧙</div>
+                    <h3>Маг</h3>
+                    <p class="hero-desc">Мощные заклинания. Урон по области.</p>
+                    <div class="hero-stats">
+                        <div class="stat-row"><span>HP</span><div class="stat-bar"><div class="stat-fill" style="width: 20%"></div></div></div>
+                        <div class="stat-row"><span>Атака</span><div class="stat-bar"><div class="stat-fill" style="width: 100%"></div></div></div>
+                        <div class="stat-row"><span>Скорость</span><div class="stat-bar"><div class="stat-fill" style="width: 60%"></div></div></div>
+                        <div class="stat-row"><span>Дальность</span><div class="stat-bar"><div class="stat-fill" style="width: 80%"></div></div></div>
+                    </div>
+                </div>
+            </div>
+            <button class="main-btn primary" id="hero-continue-btn">Далее →</button>
+            <button class="back-btn" id="hero-back-btn">← Назад</button>
+        </div>
+
         <!-- ===== ВЫБОР СЛОЖНОСТИ ===== -->
         <div id="difficulty-screen" class="screen">
             <h2>Выбери сложность</h2>

@@ -205,14 +205,74 @@ const CONFIG = {
         }
     },
 
-    // Параметры героя
+    // Типы героев
+    HEROES: {
+        knight: {
+            name: 'Рыцарь',
+            icon: '🛡️',
+            description: 'Крепкий воин. Много здоровья, сильные атаки.',
+            color: '#4dabf7',
+            hp: 250,
+            damage: 25,
+            attackSpeed: 1.0,
+            speed: 2.5,
+            range: 50,
+            respawnTime: 8000,
+            // Статы для отображения (1-5)
+            stats: { hp: 5, attack: 4, speed: 2, range: 2 }
+        },
+        archer: {
+            name: 'Лучница',
+            icon: '🏹',
+            description: 'Быстрая и ловкая. Бьёт издалека.',
+            color: '#69db7c',
+            hp: 150,
+            damage: 18,
+            attackSpeed: 0.6,
+            speed: 3.5,
+            range: 100,
+            respawnTime: 6000,
+            stats: { hp: 2, attack: 3, speed: 4, range: 5 }
+        },
+        mage: {
+            name: 'Маг',
+            icon: '🧙',
+            description: 'Мощные заклинания. Урон по области.',
+            color: '#da77f2',
+            hp: 120,
+            damage: 35,
+            attackSpeed: 1.5,
+            speed: 2.8,
+            range: 80,
+            respawnTime: 10000,
+            splashRadius: 40,
+            stats: { hp: 1, attack: 5, speed: 3, range: 4 }
+        }
+    },
+
+    // XP и уровни героя
+    HERO_LEVELS: {
+        maxLevel: 5,
+        xpPerLevel: [0, 50, 120, 220, 350], // XP для каждого уровня
+        statBoostPerLevel: 0.15, // +15% к характеристикам за уровень
+        xpPerKill: {
+            normal: 10,
+            fast: 12,
+            tank: 25,
+            flying: 15,
+            healer: 20,
+            boss: 100
+        }
+    },
+
+    // Параметры героя (устаревшее, для совместимости)
     HERO: {
         hp: 200,
         damage: 20,
         attackSpeed: 1.0,
         speed: 3,
         range: 60,
-        respawnTime: 10000 // 10 секунд
+        respawnTime: 10000
     },
 
     // Путь врагов (наземный)

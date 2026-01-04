@@ -11,6 +11,7 @@ class Game {
         this.state = 'menu'; // menu, playing, paused, gameover
         this.difficulty = 'normal';
         this.diffSettings = null;
+        this.selectedHeroType = 'knight';
 
         // Игровые объекты
         this.enemies = [];
@@ -66,6 +67,9 @@ class Game {
         this.mouseX = 0;
         this.mouseY = 0;
         this.canvasRect = null;
+
+        // ID игрового цикла для отмены при рестарте
+        this.animationFrameId = null;
 
         // Настройки
         this.settings = saveSystem.getSettings();
@@ -134,6 +138,12 @@ class Game {
     }
 
     start(difficulty) {
+        // Отменяем предыдущий игровой цикл если он существует
+        if (this.animationFrameId) {
+            cancelAnimationFrame(this.animationFrameId);
+            this.animationFrameId = null;
+        }
+
         this.difficulty = difficulty;
         this.diffSettings = CONFIG.DIFFICULTIES[difficulty];
 
@@ -166,8 +176,8 @@ class Game {
         this.selectedTowerType = 'basic';
         this.selectedTower = null;
 
-        // Создание героя
-        this.hero = new Hero(450, 300);
+        // Создание героя выбранного типа
+        this.hero = new Hero(450, 300, this.selectedHeroType);
 
         // Обновление UI
         this.updateUI();
@@ -191,7 +201,11 @@ class Game {
     }
 
     gameLoop() {
-        if (this.state === 'gameover' || this.state === 'menu') return;
+        // Останавливаем цикл если игра завершена или вышли в меню
+        if (this.state === 'gameover' || this.state === 'menu') {
+            this.animationFrameId = null;
+            return;
+        }
 
         try {
             if (this.state === 'playing') {
@@ -205,7 +219,7 @@ class Game {
             console.error('Game loop error:', error);
         }
 
-        requestAnimationFrame(() => this.gameLoop());
+        this.animationFrameId = requestAnimationFrame(() => this.gameLoop());
     }
 
     update() {
@@ -248,6 +262,12 @@ class Game {
             this.score += Math.floor(enemy.reward * this.diffSettings.scoreMult);
             this.kills++;
             this.createDeathParticles(enemy);
+
+            // Добавляем XP герою
+            if (this.hero && this.hero.alive) {
+                const xpAmount = CONFIG.HERO_LEVELS.xpPerKill[enemy.type] || 10;
+                this.hero.addXP(xpAmount);
+            }
         }
         this.enemies = this.enemies.filter(e => e.alive);
 

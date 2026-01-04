@@ -6,10 +6,13 @@ class MenuSystem {
     constructor() {
         this.screens = {
             mainMenu: document.getElementById('main-menu'),
+            heroSelect: document.getElementById('hero-screen'),
             difficulty: document.getElementById('difficulty-screen'),
             settings: document.getElementById('settings-screen'),
             records: document.getElementById('records-screen')
         };
+
+        this.selectedHero = 'knight';
 
         this.tutorialStep = 0;
         this.tutorialSteps = [
@@ -57,7 +60,7 @@ class MenuSystem {
     initEventListeners() {
         // Главное меню
         document.getElementById('play-btn').addEventListener('click', () => {
-            this.showScreen('difficulty');
+            this.showScreen('heroSelect');
             audio.resume();
         });
 
@@ -69,6 +72,26 @@ class MenuSystem {
             this.showRecords();
         });
 
+        // Выбор героя
+        document.querySelectorAll('.hero-card').forEach(card => {
+            card.addEventListener('click', () => {
+                this.selectedHero = card.dataset.hero;
+                document.querySelectorAll('.hero-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+            });
+        });
+
+        document.getElementById('hero-continue-btn').addEventListener('click', () => {
+            if (typeof game !== 'undefined') {
+                game.selectedHeroType = this.selectedHero;
+            }
+            this.showScreen('difficulty');
+        });
+
+        document.getElementById('hero-back-btn').addEventListener('click', () => {
+            this.showScreen('mainMenu');
+        });
+
         // Выбор сложности
         document.querySelectorAll('.diff-card').forEach(card => {
             card.addEventListener('click', () => {
@@ -78,7 +101,7 @@ class MenuSystem {
         });
 
         document.getElementById('diff-back-btn').addEventListener('click', () => {
-            this.showScreen('mainMenu');
+            this.showScreen('heroSelect');
         });
 
         // Настройки
