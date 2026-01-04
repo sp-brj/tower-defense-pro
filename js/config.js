@@ -197,6 +197,7 @@ const CONFIG = {
             name: 'Подкрепление',
             icon: '🛡️',
             cooldown: 45000, // 45 секунд
+            radius: 60,
             soldierCount: 3,
             soldierHp: 80,
             soldierDamage: 15,

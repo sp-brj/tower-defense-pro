@@ -429,6 +429,8 @@ class Game {
         const ctx = this.ctx;
         const ability = CONFIG.ABILITIES[this.activeAbility];
 
+        if (!ability || !ability.radius) return;
+
         ctx.beginPath();
         ctx.arc(this.mouseX, this.mouseY, ability.radius, 0, Math.PI * 2);
 
