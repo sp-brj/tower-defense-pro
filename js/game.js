@@ -162,12 +162,26 @@ class Game {
         this.abilities.reinforcements.cooldown = 0;
         this.activeAbility = null;
 
+        // Сброс выбора башни
+        this.selectedTowerType = 'basic';
+        this.selectedTower = null;
+
         // Создание героя
         this.hero = new Hero(450, 300);
 
         // Обновление UI
         this.updateUI();
         this.updateTowerButtons();
+        this.updateAbilityUI();
+
+        // Сброс кнопки волны
+        document.getElementById('start-wave-btn').disabled = false;
+
+        // Сброс выделения башен
+        document.querySelectorAll('.tower-btn').forEach(btn => {
+            btn.classList.remove('selected');
+        });
+        document.querySelector('.tower-btn.basic')?.classList.add('selected');
 
         // Запуск игрового цикла
         this.canvasRect = this.canvas.getBoundingClientRect();
