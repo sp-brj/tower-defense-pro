@@ -420,9 +420,17 @@ class Game {
     drawPlacementIndicator() {
         if (!this.isMouseOnCanvas()) return;
 
+        // Не показываем индикатор башни если активна способность
+        if (this.activeAbility) return;
+
+        // Не показываем если не выбрана башня
+        if (!this.selectedTowerType) return;
+
         const ctx = this.ctx;
-        const canPlace = this.canPlaceTower(this.mouseX, this.mouseY);
         const towerType = CONFIG.TOWER_TYPES[this.selectedTowerType];
+        if (!towerType) return;
+
+        const canPlace = this.canPlaceTower(this.mouseX, this.mouseY);
 
         // Радиус башни
         if (this.settings.showRange && canPlace) {
@@ -559,7 +567,13 @@ class Game {
     }
 
     canPlaceTower(x, y) {
-        const cost = CONFIG.TOWER_TYPES[this.selectedTowerType].cost;
+        // Если не выбрана башня (например, активна способность)
+        if (!this.selectedTowerType) return false;
+
+        const towerType = CONFIG.TOWER_TYPES[this.selectedTowerType];
+        if (!towerType) return false;
+
+        const cost = towerType.cost;
         if (this.money < cost) return false;
 
         // Проверка пути
